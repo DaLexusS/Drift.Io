@@ -16,8 +16,8 @@ public class CarController2D : MonoBehaviour
     private float currentRotationVelocity;
 
     public Joystick joystick;
-    public bool isDrifting;  // Boolean to detect if the car is drifting
-    public float driftThreshold = 5f;  // Minimum sideways velocity for a drift to be counted
+    public bool isDrifting;
+    public float driftThreshold = 5f;
 
     void Start()
     {
@@ -63,13 +63,10 @@ public class CarController2D : MonoBehaviour
 
     void CheckForDrift()
     {
-        // Calculate the car's local velocity
         Vector2 localVelocity = transform.InverseTransformDirection(carRigidbody.velocity);
 
-        // Check if the sideways velocity exceeds the drift threshold
         isDrifting = Mathf.Abs(localVelocity.x) > driftThreshold && localVelocity.y > 1f;
 
-        // Optional: Adjust driftThreshold based on speed for more flexibility
         driftThreshold = Mathf.Lerp(minPerfectDrag, maxPerfectDrag, carRigidbody.velocity.magnitude / maxSpeed);
     }
 }
