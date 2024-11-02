@@ -1,30 +1,52 @@
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarController2D : MonoBehaviour
 {
+    private Player player;
     private Rigidbody2D carRigidbody;
-    public float acceleration = 10f;
-    public float maxSpeed = 20f;
-    public float turnSpeed = 5f;
-    public float rotationDelay = 0.1f;
-    public float dragAmount = 2f;
-    public float minPerfectDrag = 5f;
-    public float maxPerfectDrag = 10f;
+
+    public CarSettings carSettings;
+
+    public float maxSpeed;
+    public int carHealth;
+
+    public float acceleration;
+    public float turnSpeed;
+    public float rotationDelay;
+    public float dragAmount;
+    public bool canDriveOver = false;
 
     private float moveInput;
     private float turnInput;
     private float currentRotationVelocity;
 
     public Joystick joystick;
-    public bool isDrifting;
-    public float driftThreshold = 5f;
 
-    void Start()
+    private void Awake()
     {
+        player = GetComponent<Player>();
         carRigidbody = GetComponent<Rigidbody2D>();
-    }
 
-    void Update()
+        maxSpeed = player.MaxSpeed;
+        carHealth = player.MaxHealth;
+
+        if (carSettings != null)
+        {
+            acceleration = carSettings.acceleration;
+            turnSpeed = carSettings.turnSpeed;
+            rotationDelay = carSettings.rotationDelay;
+            dragAmount = carSettings.dragAmount;
+        }
+    }
+    void FixedUpdate()
+    {
+        DriveOnInput();
+        AdjustCarRotation();
+        CanDriveOverEnemies();
+    }
+    private void DriveOnInput()
     {
         moveInput = joystick.Vertical;
         turnInput = joystick.Horizontal;
@@ -42,11 +64,9 @@ public class CarController2D : MonoBehaviour
         {
             carRigidbody.drag = 0;
         }
-
-        CheckForDrift();
     }
 
-    void FixedUpdate()
+    private void AdjustCarRotation()
     {
         Vector2 moveDirection = new Vector2(turnInput, moveInput).normalized;
 
@@ -61,12 +81,16 @@ public class CarController2D : MonoBehaviour
         }
     }
 
-    void CheckForDrift()
+    private void CanDriveOverEnemies()
     {
-        Vector2 localVelocity = transform.InverseTransformDirection(carRigidbody.velocity);
-
-        isDrifting = Mathf.Abs(localVelocity.x) > driftThreshold && localVelocity.y > 1f;
-
-        driftThreshold = Mathf.Lerp(minPerfectDrag, maxPerfectDrag, carRigidbody.velocity.magnitude / maxSpeed);
+        float speedPercentage = maxSpeed - (maxSpeed * 0.25f);
+        if (carRigidbody.velocity.magnitude >= speedPercentage) 
+        {
+            canDriveOver = true;
+        }
+        else
+        {
+            canDriveOver = false;
+        }
     }
 }
