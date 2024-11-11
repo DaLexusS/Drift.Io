@@ -1,4 +1,5 @@
 using System;
+using System.Net.NetworkInformation;
 using Unity.Mathematics;
 using UnityEngine;
 public class Player : MonoBehaviour
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
     private int health;
     private float maxSpeed;
     private float damageNegation;
+    public int damageOnHit;
 
     public int Health
     {
@@ -32,20 +34,22 @@ public class Player : MonoBehaviour
         set { damageNegation = math.max(value, damageNegation); }
     }
 
-    public Player()
+    public Player ()
     {
         maxHealth = 100;
         health = maxHealth;
         maxSpeed = 3;
         damageNegation = 0.1f;
+        damageOnHit = 3;
     }
 
-    public Player(int initialMaxHealth, float initialMaxSpeed, float initialDamageNegation)
+    public Player(int initialMaxHealth, float initialMaxSpeed, float initialDamageNegation, int initialDamageOnHit)
     {
         maxHealth = initialMaxHealth;
         health = maxHealth;
         maxSpeed = initialMaxSpeed;
         damageNegation = initialDamageNegation;
+        damageOnHit = initialDamageOnHit;
     }
 
     public void TakeDamage(int damage)
