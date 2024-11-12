@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8283445842790726300}
   - component: {fileID: 1390949457394278454}
   - component: {fileID: 6124393033259821593}
+  - component: {fileID: 7608031613754102734}
   m_Layer: 6
   m_Name: Zombie
   m_TagString: Enemy
@@ -163,8 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySettings: {fileID: 11400000, guid: affd303b3396a7245955500cdce91163, type: 2}
-  health: 0
-  damageResistance: 0
   walkSpeed: 0
   attackRange: 0
   difficulty: 0
@@ -206,3 +205,18 @@ CircleCollider2D:
   m_Offset: {x: 0.00000047683716, y: 0}
   serializedVersion: 2
   m_Radius: 0.55
+--- !u!114 &7608031613754102734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3602058355314580889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a5feaa72984014fb69d5af9070b134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySettings: {fileID: 11400000, guid: affd303b3396a7245955500cdce91163, type: 2}
+  health: 0
+  damageResistance: 0

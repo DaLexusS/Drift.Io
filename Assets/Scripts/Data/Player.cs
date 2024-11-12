@@ -4,10 +4,10 @@ using Unity.Mathematics;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
-    private int maxHealth;
-    private int health;
-    private float maxSpeed;
-    private float damageNegation;
+    public int maxHealth;
+    public int health;
+    public float maxSpeed;
+    public float damageNegation;
     public int damageOnHit;
 
     public int Health
@@ -32,6 +32,12 @@ public class Player : MonoBehaviour
     {
         get { return damageNegation; }
         set { damageNegation = math.max(value, damageNegation); }
+    }
+
+    public float DamageOnHit
+    {
+        get { return damageOnHit; }
+        set {}
     }
 
     public Player ()

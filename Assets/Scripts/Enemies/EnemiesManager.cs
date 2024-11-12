@@ -31,7 +31,7 @@ public class EnemiesManager : MonoBehaviour
         {
             lastTimeSpawned = Time.time + spawnDelay;
 
-            if (currentCount >= MaxEnemyCount) { return; }
+            if (transform.childCount >= MaxEnemyCount) { return; }
 
             SpawnEnemy();
 

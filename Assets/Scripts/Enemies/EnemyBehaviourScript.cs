@@ -8,8 +8,6 @@ public class EnemyBehaviorScript : MonoBehaviour
 {
     public EnemySettings enemySettings;
 
-    public int health;
-    public float damageResistance;
     public float walkSpeed;
     public float attackRange;
     public int difficulty;
@@ -21,8 +19,6 @@ public class EnemyBehaviorScript : MonoBehaviour
 
     void Start()
     {
-        health = enemySettings.Health;
-        damageResistance = enemySettings.DamageResistance;
         walkSpeed = enemySettings.WalkSpeed;
         attackRange = enemySettings.AttackRange;
         difficulty = enemySettings.Difficulty;
