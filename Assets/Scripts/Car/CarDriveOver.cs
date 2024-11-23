@@ -19,17 +19,19 @@ public class CarDriveOver : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!controller.canDriveOver) 
+        if (collision.CompareTag("Enemy"))
         {
-            if (lastHit >= Time.time)
+            int enemyDamage = collision.GetComponent<EnemyBehaviorScript>().enemySettings.Damage;
+            if (!controller.canDriveOver)
             {
-                player.TakeDamage(3);
-                lastHit = Time.time + PlayerDamageCooldown;
+                player.TakeDamage(enemyDamage);
+
+                if (lastHit >= Time.time)
+                {
+                    lastHit = Time.time + PlayerDamageCooldown;
+                }
             }
-        }
-        else
-        {
-            if (collision.CompareTag("Enemy"))
+            else
             {
                 Health hitEnemyHealth = collision.GetComponent<Health>();
                 hitEnemyHealth.Damage(playerDamageOnEnemyHit);

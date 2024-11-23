@@ -8,5 +8,6 @@ public class EnemySettings : ScriptableObject
     public float WalkSpeed;
     public float AttackRange;
     public int Difficulty;
+    public int Damage;
 }
 

@@ -10,7 +10,6 @@ public class CarController2D : MonoBehaviour
     public CarSettings carSettings;
 
     public float maxSpeed;
-    public int carHealth;
 
     public float acceleration;
     public float turnSpeed;
@@ -29,8 +28,7 @@ public class CarController2D : MonoBehaviour
         player = GetComponent<Player>();
         carRigidbody = GetComponent<Rigidbody2D>();
 
-        maxSpeed = player.MaxSpeed;
-        carHealth = player.MaxHealth;
+        maxSpeed = player.maxSpeed;
 
         if (carSettings != null)
         {

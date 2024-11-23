@@ -1,7 +1,10 @@
 using System;
-using System.Net.NetworkInformation;
 using Unity.Mathematics;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
+
 public class Player : MonoBehaviour
 {
     public int maxHealth;
@@ -9,63 +12,37 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public float damageNegation;
     public int damageOnHit;
+    public bool hitCooldown;
+    public float cooldownTime = 1f;
 
-    public int Health
-    {
-        get { return health; }
-        set { health = Math.Clamp(value, 0, maxHealth); }
-    }
-
-    public int MaxHealth
-    {
-        get { return maxHealth; }
-        set { maxHealth = math.max(value, maxHealth); }
-    }
-
-    public float MaxSpeed
-    {
-        get { return maxSpeed; }
-        set { maxSpeed = math.max(value, maxSpeed); }
-    }
-
-    public float DamageNegation
-    {
-        get { return damageNegation; }
-        set { damageNegation = math.max(value, damageNegation); }
-    }
-
-    public float DamageOnHit
-    {
-        get { return damageOnHit; }
-        set {}
-    }
-
-    public Player ()
+    public void Start ()
     {
         maxHealth = 100;
         health = maxHealth;
         maxSpeed = 3;
         damageNegation = 0.1f;
         damageOnHit = 3;
-    }
-
-    public Player(int initialMaxHealth, float initialMaxSpeed, float initialDamageNegation, int initialDamageOnHit)
-    {
-        maxHealth = initialMaxHealth;
-        health = maxHealth;
-        maxSpeed = initialMaxSpeed;
-        damageNegation = initialDamageNegation;
-        damageOnHit = initialDamageOnHit;
+        hitCooldown = false;
     }
 
     public void TakeDamage(int damage)
     {
-        Health -= damage;
+        if (!hitCooldown)
+        {
+            StartCoroutine(StartDamageCooldown());
+
+            health = math.max(0, health - damage);
+
+            if (health == 0)
+            {
+                PlayerDied();
+            }
+        }
     }
 
     public void Heal(int amount)
     {
-        health += amount;
+        health = math.min(maxHealth, health + amount);
     }
 
     public void UpgradeMaxHealth(int amount) 
@@ -81,5 +58,17 @@ public class Player : MonoBehaviour
     public void AddDamageNegation(float amount)
     {
         damageNegation += amount;
+    }
+
+    public void PlayerDied()
+    {
+        //TODO Player died function
+    }
+
+    private IEnumerator StartDamageCooldown()
+    {
+        hitCooldown = true;
+        yield return new WaitForSeconds(cooldownTime);
+        hitCooldown = false;
     }
 }
