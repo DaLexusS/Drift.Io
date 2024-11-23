@@ -1,4 +1,5 @@
-using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CarDriveOver : MonoBehaviour
@@ -9,6 +10,7 @@ public class CarDriveOver : MonoBehaviour
     private int playerDamageOnEnemyHit;
     private int PlayerDamageCooldown = 1;
     private float lastHit;
+
     private void Start()
     {
         lastHit = Time.time;
@@ -19,8 +21,9 @@ public class CarDriveOver : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !collision.GetComponent<Health>().damagedCooldown)
         {
+
             int enemyDamage = collision.GetComponent<EnemyBehaviorScript>().enemySettings.Damage;
             if (!controller.canDriveOver)
             {

@@ -9,5 +9,6 @@ public class EnemySettings : ScriptableObject
     public float AttackRange;
     public int Difficulty;
     public int Damage;
+    public int xpForKill;
 }
 

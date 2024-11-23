@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class Player : MonoBehaviour
     public bool hitCooldown;
     public float cooldownTime = 1f;
 
+    public float roundPlayerLevel;
+    public float roundXp;
+    public float xpNeededToLevel;
+
     public void Start ()
     {
         maxHealth = 100;
@@ -23,6 +28,10 @@ public class Player : MonoBehaviour
         damageNegation = 0.1f;
         damageOnHit = 3;
         hitCooldown = false;
+
+        roundPlayerLevel = 0;
+        roundXp = 0;
+        xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
     }
 
     public void TakeDamage(int damage)
@@ -63,6 +72,22 @@ public class Player : MonoBehaviour
     public void PlayerDied()
     {
         //TODO Player died function
+    }
+
+    public void AddXp(float amount) 
+    {
+        roundXp += amount;
+        if (roundXp >= xpNeededToLevel)
+        {
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        roundXp = 0;
+        roundPlayerLevel += 1;
+        xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
     }
 
     private IEnumerator StartDamageCooldown()
