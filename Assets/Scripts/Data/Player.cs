@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -31,7 +32,8 @@ public class Player : MonoBehaviour
 
         roundPlayerLevel = 0;
         roundXp = 0;
-        xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
+        // xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
+        xpNeededToLevel = LevelHandler.ReturnStaticLevel();
     }
 
     public void TakeDamage(int damage)
@@ -71,7 +73,7 @@ public class Player : MonoBehaviour
 
     public void PlayerDied()
     {
-        //TODO Player died function
+        SceneManager.LoadScene("Menu");
     }
 
     public void AddXp(float amount) 
@@ -87,7 +89,8 @@ public class Player : MonoBehaviour
     {
         roundXp = 0;
         roundPlayerLevel += 1;
-        xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
+        //xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
+        xpNeededToLevel = LevelHandler.ReturnStaticLevel();
     }
 
     private IEnumerator StartDamageCooldown()

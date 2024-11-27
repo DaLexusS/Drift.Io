@@ -13,9 +13,14 @@ public static class LevelHandler
 
         if (level == 0)
         {
-            return 50;
+            return 1000f;
         }
 
         return calculate;
+    }
+
+    public static float ReturnStaticLevel()
+    {
+        return 1000f;
     }
 }
