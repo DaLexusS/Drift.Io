@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyBehaviorScript : MonoBehaviour
 {
@@ -15,7 +12,6 @@ public class EnemyBehaviorScript : MonoBehaviour
     private Rigidbody2D Rigidbody;
     public bool walkCooldown = false;
     public float cooldownTime = 1f;
-    private float timePassedCooldown;
 
     void Start()
     {
@@ -24,7 +20,6 @@ public class EnemyBehaviorScript : MonoBehaviour
         difficulty = enemySettings.Difficulty;
         player = GameObject.FindWithTag("Player");
         Rigidbody = transform.GetComponent<Rigidbody2D>();
-        timePassedCooldown = Time.time;
     }
 
 

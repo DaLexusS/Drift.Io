@@ -1,10 +1,7 @@
-using System;
+
 using Unity.Mathematics;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
