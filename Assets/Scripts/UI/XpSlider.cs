@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class XpSlider : MonoBehaviour
 {
     [SerializeField] private Slider slider;
+    [SerializeField] public TextMeshProUGUI levelText;
     private Player playerData;
 
     void Start()
@@ -24,16 +26,19 @@ public class XpSlider : MonoBehaviour
 
         slider.maxValue = playerData.xpNeededToLevel;
         slider.minValue = 0;
+        levelText.text = playerData.roundPlayerLevel.ToString();
     }
 
     void Update()
     {
         slider.maxValue = playerData.xpNeededToLevel;
         slider.minValue = 0;
+        levelText.text = playerData.roundPlayerLevel.ToString();
 
         if (playerData != null)
         {
             slider.value = playerData.roundXp;
+            
         }
     }
 }
