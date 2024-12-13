@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEditor.Events;
 
 public class EnemyBehaviorScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyBehaviorScript : MonoBehaviour
     private Rigidbody2D Rigidbody;
     public bool walkCooldown = false;
     public float cooldownTime = 1f;
+    public Event EnemyFoundAwayForToLong;
 
     void Start()
     {

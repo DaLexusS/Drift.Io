@@ -34,6 +34,11 @@ public class Health : MonoBehaviour
         CheckAlive();
     }
 
+    public void Remove()
+    {
+        Object.Destroy(gameObject);
+    }
+
     private void CheckAlive()
     {
         if (health <= 0) 

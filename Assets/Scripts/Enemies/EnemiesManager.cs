@@ -1,17 +1,18 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemiesManager : MonoBehaviour
 {
     [SerializeField] public GameObject Zombie;
-    [SerializeField] private Transform[] spawners;
+    [SerializeField] private GameObject SpawnersFolder;
+
     public int MaxEnemyCount = 10;
     public int spawnDelay = 2;
 
-    private int currentCount = 0;
     private float lastTimeSpawned;
     private GameObject player;
-    private float spawnOffset = 2f;
 
     public bool spawnOnPlayerDirection = false;
     private Camera mainCamera;
@@ -32,23 +33,31 @@ public class EnemiesManager : MonoBehaviour
             if (transform.childCount >= MaxEnemyCount) { return; }
 
             SpawnEnemy();
-
-            currentCount += 1;
         }
 
     }
 
     private void SpawnEnemy()
     {
-        if (spawners.Length == 0) { return; }
+        int randomIndex = Random.Range(0, SpawnersFolder.transform.childCount - 1);
 
-        int randomIndex = Random.Range(0, spawners.Length);
-        Transform selectedSpawner = spawners[randomIndex];
+        Transform randomSpawner = SpawnersFolder.transform.GetChild(randomIndex);
 
-        Vector3 spawnDirection = (selectedSpawner.position - Camera.main.transform.position).normalized;
-        Vector3 spawnPosition = selectedSpawner.position + spawnDirection * spawnOffset;
-        spawnPosition.z = 0;
+        if (IsObjectOutOfView(randomSpawner))
+        {
+            Vector3 spawnPosition = randomSpawner.position;
+            spawnPosition.z = 0;
+            Instantiate(Zombie, spawnPosition, Quaternion.identity, transform);
+        }
+    }
 
-        Instantiate(Zombie, spawnPosition, Quaternion.identity, transform);
+    bool IsObjectOutOfView(Transform obj)
+    {
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+
+        Vector3 viewportPoint = mainCamera.WorldToViewportPoint(obj.position);
+
+        return viewportPoint.z < 0 || viewportPoint.x < 0 || viewportPoint.x > 1 || viewportPoint.y < 0 || viewportPoint.y > 1;
     }
 }
