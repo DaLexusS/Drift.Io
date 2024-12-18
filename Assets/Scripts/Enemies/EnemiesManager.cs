@@ -1,7 +1,5 @@
-
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class EnemiesManager : MonoBehaviour
 {
@@ -9,7 +7,11 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private GameObject SpawnersFolder;
 
     public int MaxEnemyCount = 10;
-    public int spawnDelay = 2;
+    public float BaseSpawnRate = 2;
+    public float spawnDelay = 2;
+    public float MaxRoundTime = 180f;
+
+    List<Transform> closestToPlayerSpawners = new List<Transform>();
 
     private float lastTimeSpawned;
     private GameObject player;
@@ -34,24 +36,69 @@ public class EnemiesManager : MonoBehaviour
 
             SpawnEnemy();
         }
-
     }
 
     private void SpawnEnemy()
     {
-        int randomIndex = Random.Range(0, SpawnersFolder.transform.childCount - 1);
+        closestToPlayerSpawners.Clear();
+        Transform closestSpawner = GetClosestSpawnerOutOfView();
 
-        Transform randomSpawner = SpawnersFolder.transform.GetChild(randomIndex);
-
-        if (IsObjectOutOfView(randomSpawner))
+        if (closestSpawner != null)
         {
-            Vector3 spawnPosition = randomSpawner.position;
-            spawnPosition.z = 0;
-            Instantiate(Zombie, spawnPosition, Quaternion.identity, transform);
+                
+            foreach(Transform t in closestToPlayerSpawners)
+            {
+                Vector3 spawnPosition = t.position;
+                spawnPosition.z = 0;
+                Instantiate(Zombie, spawnPosition, Quaternion.identity, transform);
+            }
         }
+
+        spawnDelay = BaseSpawnRate / (1 + (Time.time % 60) / 60);
     }
 
-    bool IsObjectOutOfView(Transform obj)
+    private Transform GetClosestSpawnerOutOfView()
+    {
+        List<Transform> closestSpawners = new List<Transform>();
+        float closestDistance = float.MaxValue;
+
+       
+        foreach (Transform spawner in SpawnersFolder.transform)
+        {
+            if (IsObjectOutOfView(spawner))
+            {
+                float distance = Vector3.Distance(player.transform.position, spawner.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                }
+            }
+        }
+
+        
+        float threshold = 5f;
+        foreach (Transform spawner in SpawnersFolder.transform)
+        {
+            if (IsObjectOutOfView(spawner))
+            {
+                float distance = Vector3.Distance(player.transform.position, spawner.position);
+                if (Mathf.Abs(distance - closestDistance) <= threshold)
+                {
+                    closestSpawners.Add(spawner);
+                    closestToPlayerSpawners.Add(spawner);
+                }
+            }
+        }
+
+        if (closestSpawners.Count > 0)
+        {
+            return closestSpawners[Random.Range(0, closestSpawners.Count)];
+        }
+
+        return null;
+    }
+
+    private bool IsObjectOutOfView(Transform obj)
     {
         if (mainCamera == null)
             mainCamera = Camera.main;

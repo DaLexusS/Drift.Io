@@ -17,5 +17,5 @@ MonoBehaviour:
   WalkSpeed: 1
   AttackRange: 1
   Difficulty: 1
-  Damage: 0
+  Damage: 5
   xpForKill: 100

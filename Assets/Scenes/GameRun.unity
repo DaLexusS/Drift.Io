@@ -2149,6 +2149,8 @@ GameObject:
   - component: {fileID: 316281840}
   - component: {fileID: 316281842}
   - component: {fileID: 316281843}
+  - component: {fileID: 316281844}
+  - component: {fileID: 316281845}
   m_Layer: 7
   m_Name: Car
   m_TagString: Player
@@ -2381,7 +2383,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.53, y: 3.49}
+  m_Size: {x: 1.53, y: 2.82}
   m_EdgeRadius: 0
 --- !u!114 &316281841
 MonoBehaviour:
@@ -2422,6 +2424,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 667564606}
+--- !u!58 &316281844
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316281833}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.97}
+  serializedVersion: 2
+  m_Radius: 0.93
+--- !u!58 &316281845
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316281833}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.88}
+  serializedVersion: 2
+  m_Radius: 0.93
 --- !u!1 &328741877
 GameObject:
   m_ObjectHideFlags: 0
@@ -8435,7 +8507,9 @@ MonoBehaviour:
   Zombie: {fileID: 3602058355314580889, guid: ea78cffb117c8954b9fb5e22213fe840, type: 3}
   SpawnersFolder: {fileID: 1819130534}
   MaxEnemyCount: 50
+  BaseSpawnRate: 5
   spawnDelay: 1
+  MaxRoundTime: 180
   spawnOnPlayerDirection: 0
 --- !u!1 &1573923819
 GameObject:

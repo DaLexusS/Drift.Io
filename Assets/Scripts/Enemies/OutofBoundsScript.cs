@@ -5,7 +5,7 @@ public class OutofBoundsScript : MonoBehaviour
 {
     private Camera mainCamera;
     public UnityEvent enemyOutOfBounds;
-    private float outOfBoundsLifeTime = 10f;
+    [SerializeField] public float outOfBoundsLifeTime = 5f;
     private float nextTickForEvent = 0;
 
     void Start()
