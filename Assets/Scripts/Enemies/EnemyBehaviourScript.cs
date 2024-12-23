@@ -41,6 +41,17 @@ public class EnemyBehaviorScript : MonoBehaviour
         }
     }
 
+    /*
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (player != null && Rigidbody != null)
+        {
+            Vector2 pushDirection = (Rigidbody.position - (Vector2)player.transform.position).normalized;
+            float pushDistance = 0.1f;
+            Rigidbody.MovePosition(Rigidbody.position + pushDirection * pushDistance);
+        }
+    }*/
+
     private IEnumerator StartWalkCooldown()
     {
         walkCooldown = true;
