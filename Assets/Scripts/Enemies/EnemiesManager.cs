@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,11 +6,13 @@ public class EnemiesManager : MonoBehaviour
 {
     [SerializeField] public GameObject Zombie;
     [SerializeField] private GameObject SpawnersFolder;
+    [SerializeField] public GameObject Timer;
 
     public int MaxEnemyCount = 10;
-    public float BaseSpawnRate = 2;
-    public float spawnDelay = 2;
+    public float BaseSpawnRate = 3f;
+    public float spawnDelay = 3f;
     public float MaxRoundTime = 180f;
+    private int currentTime;
 
     List<Transform> closestToPlayerSpawners = new List<Transform>();
 
@@ -21,9 +24,11 @@ public class EnemiesManager : MonoBehaviour
 
     private void Start()
     {
+        currentTime = Timer.GetComponent<Timer>().time;
         lastTimeSpawned = Time.time;
         mainCamera = Camera.main;
         player = GameObject.FindWithTag("Player");
+        StartCoroutine(AdjustSpawnDelayOverTime());
     }
 
     private void Update()
@@ -45,16 +50,13 @@ public class EnemiesManager : MonoBehaviour
 
         if (closestSpawner != null)
         {
-                
-            foreach(Transform t in closestToPlayerSpawners)
+            foreach (Transform t in closestToPlayerSpawners)
             {
                 Vector3 spawnPosition = t.position;
                 spawnPosition.z = 0;
                 Instantiate(Zombie, spawnPosition, Quaternion.identity, transform);
             }
         }
-
-        spawnDelay = BaseSpawnRate / (1 + (Time.time % 60) / 60);
     }
 
     private Transform GetClosestSpawnerOutOfView()
@@ -62,7 +64,6 @@ public class EnemiesManager : MonoBehaviour
         List<Transform> closestSpawners = new List<Transform>();
         float closestDistance = float.MaxValue;
 
-       
         foreach (Transform spawner in SpawnersFolder.transform)
         {
             if (IsObjectOutOfView(spawner))
@@ -75,7 +76,6 @@ public class EnemiesManager : MonoBehaviour
             }
         }
 
-        
         float threshold = 5f;
         foreach (Transform spawner in SpawnersFolder.transform)
         {
@@ -96,6 +96,60 @@ public class EnemiesManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private IEnumerator AdjustSpawnDelayOverTime()
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime < MaxRoundTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime < 60f)
+            {
+                MaxEnemyCount = 50;
+                spawnDelay = Mathf.Lerp(3f, 1.5f, elapsedTime / 60f);
+            }
+            else if (elapsedTime < 65f)
+            {
+                spawnDelay = 1.5f;
+                yield return new WaitForSeconds(5f);
+                elapsedTime += 5f;
+            }
+            else if (elapsedTime < 90f)
+            {
+                spawnDelay = Mathf.Lerp(1.5f, 3f, (elapsedTime - 65f) / 25f);
+            }
+            else if (elapsedTime < 120f)
+            {
+                MaxEnemyCount = 100;
+                spawnDelay = Mathf.Lerp(3f, 1.5f, (elapsedTime - 90f) / 30f);
+            }
+            else if (elapsedTime < 125f)
+            {
+                spawnDelay = 1.5f;
+                yield return new WaitForSeconds(5f);
+                elapsedTime += 5f;
+            }
+            else if (elapsedTime < 150f)
+            {
+                MaxEnemyCount = 150;
+                spawnDelay = Mathf.Lerp(1.5f, 3f, (elapsedTime - 125f) / 25f);
+            }
+            else if (elapsedTime < 180f)
+            {
+                spawnDelay = 0.5f;
+                yield return new WaitForSeconds(10f);
+                elapsedTime += 10f;
+            }
+            else
+            {
+                spawnDelay = 3f;
+            }
+
+            yield return null;
+        }
     }
 
     private bool IsObjectOutOfView(Transform obj)

@@ -1518,6 +1518,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1819130535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &417736408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 417736410}
+  - component: {fileID: 417736409}
+  m_Layer: 0
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &417736409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417736408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5738d763fc9514b44a6c8ac138c6c929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+--- !u!4 &417736410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417736408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8749598, y: 11.120043, z: -0.38104388}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &492329138
 GameObject:
   m_ObjectHideFlags: 0
@@ -3958,9 +4003,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Zombie: {fileID: 3602058355314580889, guid: ea78cffb117c8954b9fb5e22213fe840, type: 3}
   SpawnersFolder: {fileID: 1819130534}
-  MaxEnemyCount: 50
-  BaseSpawnRate: 5
-  spawnDelay: 1
+  Timer: {fileID: 417736408}
+  MaxEnemyCount: 100
+  BaseSpawnRate: 2
+  spawnDelay: 2
   MaxRoundTime: 180
   spawnOnPlayerDirection: 0
 --- !u!1 &1612320918
@@ -5074,3 +5120,4 @@ SceneRoots:
   - {fileID: 1819130535}
   - {fileID: 1997620003}
   - {fileID: 598964466}
+  - {fileID: 417736410}
