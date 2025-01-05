@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Player : MonoBehaviour
     public float roundXp;
     public float xpNeededToLevel;
 
+    public static event UnityAction<int> OnHealthChanged;
+    public static event UnityAction<float> OnXpChanged;
+
     public void Start ()
     {
         maxHealth = 100;
@@ -29,7 +33,6 @@ public class Player : MonoBehaviour
 
         roundPlayerLevel = 0;
         roundXp = 0;
-        // xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
         xpNeededToLevel = LevelHandler.ReturnStaticLevel();
     }
 
@@ -40,6 +43,8 @@ public class Player : MonoBehaviour
             StartCoroutine(StartDamageCooldown());
 
             health = math.max(0, health - damage);
+
+            OnHealthChanged.Invoke(health);
 
             if (health == 0)
             {
@@ -76,6 +81,7 @@ public class Player : MonoBehaviour
     public void AddXp(float amount) 
     {
         roundXp += amount;
+        OnXpChanged.Invoke(roundXp);
         if (roundXp >= xpNeededToLevel)
         {
             LevelUp();
@@ -86,8 +92,8 @@ public class Player : MonoBehaviour
     {
         roundXp = 0;
         roundPlayerLevel += 1;
-        //xpNeededToLevel = LevelHandler.ReturnXPCalculation(roundPlayerLevel);
         xpNeededToLevel = LevelHandler.ReturnStaticLevel();
+        OnXpChanged.Invoke(roundXp);
     }
 
     private IEnumerator StartDamageCooldown()

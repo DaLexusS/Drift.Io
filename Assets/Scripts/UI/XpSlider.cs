@@ -1,5 +1,7 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class XpSlider : MonoBehaviour
@@ -27,9 +29,14 @@ public class XpSlider : MonoBehaviour
         slider.maxValue = playerData.xpNeededToLevel;
         slider.minValue = 0;
         levelText.text = playerData.roundPlayerLevel.ToString();
+        Player.OnXpChanged += UpdateXpBar;
     }
 
-    void Update()
+    private void OnDestroy()
+    {
+        Player.OnXpChanged -= UpdateXpBar;
+    }
+    private void UpdateXpBar(float currentAmount)
     {
         slider.maxValue = playerData.xpNeededToLevel;
         slider.minValue = 0;
@@ -37,8 +44,7 @@ public class XpSlider : MonoBehaviour
 
         if (playerData != null)
         {
-            slider.value = playerData.roundXp;
-            
+            slider.value = currentAmount;
         }
     }
 }

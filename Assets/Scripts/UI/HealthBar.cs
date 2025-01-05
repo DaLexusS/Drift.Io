@@ -28,16 +28,18 @@ public class HealthBar : MonoBehaviour
 
         slider.maxValue = playerData.maxHealth;
         slider.minValue = 0;
+
+        slider.value = playerData.health;
+
+        Player.OnHealthChanged += UpdateUi;
     }
-
-    void Update()
+    private void OnDestroy()
     {
+        Player.OnHealthChanged -= UpdateUi;
+    }
+    private void UpdateUi(int currentHealth)
+    {
+        slider.value = currentHealth;
         slider.maxValue = playerData.maxHealth;
-        slider.minValue = 0;
-
-        if (playerData != null)
-        {
-            slider.value = playerData.health;
-        }
     }
 }
