@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 444106715336988676}
   - component: {fileID: 6421738767796663485}
   m_Layer: 6
-  m_Name: Square
+  m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3347292765124351477}
@@ -116,7 +116,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.0908393, y: -0.21227346, z: 0}
-  m_LocalScale: {x: 0.34, y: 0.34, z: 0.34}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 444106715336988676}
@@ -254,7 +254,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.00000047683716, y: 0}
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 0.48
 --- !u!114 &7608031613754102734
 MonoBehaviour:
   m_ObjectHideFlags: 0
