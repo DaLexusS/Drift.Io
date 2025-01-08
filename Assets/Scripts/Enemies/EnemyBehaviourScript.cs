@@ -14,20 +14,21 @@ public class EnemyBehaviorScript : MonoBehaviour
     public float cooldownTime = 1f;
     public Event EnemyFoundAwayForToLong;
 
-    void Start()
+    void Awake()
     {
         walkSpeed = enemySettings.WalkSpeed;
         attackRange = enemySettings.AttackRange;
         difficulty = enemySettings.Difficulty;
+
         player = GameObject.FindWithTag("Player");
+
         Rigidbody = transform.GetComponent<Rigidbody2D>();
     }
 
-
     void FixedUpdate()
     {
-        if (walkCooldown) { return;}
-        if (!player) { return;}
+        if (walkCooldown) { return; }
+        if (!player) { return; }
         Vector2 direction = ((Vector2)player.transform.position - Rigidbody.position).normalized;
         Vector2 newPosition = Rigidbody.position + direction * walkSpeed * Time.deltaTime;
         Rigidbody.MovePosition(newPosition);
@@ -40,17 +41,6 @@ public class EnemyBehaviorScript : MonoBehaviour
             StartCoroutine(StartWalkCooldown());
         }
     }
-
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (player != null && Rigidbody != null)
-        {
-            Vector2 pushDirection = (Rigidbody.position - (Vector2)player.transform.position).normalized;
-            float pushDistance = 0.1f;
-            Rigidbody.MovePosition(Rigidbody.position + pushDirection * pushDistance);
-        }
-    }*/
 
     private IEnumerator StartWalkCooldown()
     {

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CarDriveOver : MonoBehaviour
 {
-
     Player player;
     CarController2D controller;
     private int playerDamageOnEnemyHit;
@@ -23,10 +22,10 @@ public class CarDriveOver : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !collision.GetComponent<Health>().damagedCooldown)
         {
-
-            int enemyDamage = collision.GetComponent<EnemyBehaviorScript>().enemySettings.Damage;
             if (!controller.canDriveOver)
             {
+
+                int enemyDamage = collision.GetComponent<EnemyBehaviorScript>().enemySettings.Damage;
                 player.TakeDamage(enemyDamage);
 
                 if (lastHit >= Time.time)
