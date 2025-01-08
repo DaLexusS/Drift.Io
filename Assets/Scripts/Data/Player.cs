@@ -19,8 +19,11 @@ public class Player : MonoBehaviour
     public float roundXp;
     public float xpNeededToLevel;
 
+    public int enemiesKilled = 0;
+
     public static event UnityAction<int> OnHealthChanged;
     public static event UnityAction<float> OnXpChanged;
+    public UnityEvent<int> killedEnemiesEvent;
     CarController2D controller;
 
     private void Awake()
@@ -102,6 +105,11 @@ public class Player : MonoBehaviour
         OnXpChanged.Invoke(roundXp);
     }
 
+    public void UpdateKilledEnemies(int amount)
+    {
+        enemiesKilled += amount;
+    }
+
     private IEnumerator StartDamageCooldown()
     {
         hitCooldown = true;
@@ -122,6 +130,8 @@ public class Player : MonoBehaviour
             if (enemyHealth == null) { return; }
 
             enemyHealth.Damage(damage);
+
+            killedEnemiesEvent.Invoke(enemiesKilled);
         }
     }
 }

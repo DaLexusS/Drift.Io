@@ -1,6 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
@@ -34,17 +35,14 @@ public class Health : MonoBehaviour
         CheckAlive();
     }
 
-    public void Remove()
-    {
-        Object.Destroy(gameObject);
-    }
-
     private void CheckAlive()
     {
         if (health <= 0) 
         {
             player.GetComponent<Player>().AddXp(enemySettings.xpForKill);
-            Object.Destroy(gameObject); 
+            Object.Destroy(gameObject);
+
+            player.GetComponent<Player>().enemiesKilled++;
         }
     }
 
