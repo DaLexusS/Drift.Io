@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public int health;
     public float maxSpeed;
     public float damageNegation;
-    public int damageOnHit;
+    public int damage;
     public bool hitCooldown;
     public float cooldownTime = 1f;
 
@@ -21,6 +21,12 @@ public class Player : MonoBehaviour
 
     public static event UnityAction<int> OnHealthChanged;
     public static event UnityAction<float> OnXpChanged;
+    CarController2D controller;
+
+    private void Awake()
+    {
+        controller = GetComponent<CarController2D>();
+    }
 
     public void Start ()
     {
@@ -28,7 +34,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
         maxSpeed = 3;
         damageNegation = 0.1f;
-        damageOnHit = 3;
+        damage = 3;
         hitCooldown = false;
 
         roundPlayerLevel = 0;
@@ -101,5 +107,21 @@ public class Player : MonoBehaviour
         hitCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         hitCooldown = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag != "Enemy") { return; }
+
+        if (!controller.canDriveOver) { return; }
+
+        else
+        {
+            Health enemyHealth = collision.GetComponent<Health>();
+
+            if (enemyHealth == null) { return; }
+
+            enemyHealth.Damage(damage);
+        }
     }
 }
