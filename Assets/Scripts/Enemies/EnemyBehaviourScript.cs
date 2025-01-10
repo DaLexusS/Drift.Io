@@ -12,7 +12,7 @@ public class EnemyBehaviorScript : MonoBehaviour
     private Rigidbody2D Rigidbody;
     CarController2D controller;
     public bool walkCooldown = false;
-    public float cooldownTime = 2f;
+    public float cooldownTime = 4f;
     public Event EnemyFoundAwayForToLong;
     private int PlayerDamageCooldown = 1;
     private float lastHit = 0;
