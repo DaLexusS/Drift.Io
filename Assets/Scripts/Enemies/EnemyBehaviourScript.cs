@@ -7,33 +7,31 @@ public class EnemyBehaviorScript : MonoBehaviour
 
     public float walkSpeed;
     public float attackRange;
-    public int difficulty;
+    public int damage;
+
     public GameObject player;
     private Rigidbody2D Rigidbody;
-    CarController2D controller;
-    public bool walkCooldown = false;
-    public float cooldownTime = 4f;
-    public Event EnemyFoundAwayForToLong;
+    private CarController2D controller;
+
     private int PlayerDamageCooldown = 1;
     private float lastHit = 0;
-    private int damage;
-    [SerializeField] public GameObject visual;
-    private float centerThreshold = 0.05f;
+    public float cooldownTime = 4f;
+
+    public bool walkCooldown = false;
+
+    public Event EnemyFoundAwayForToLong;
 
     void Awake()
     {
         lastHit = Time.time;
         walkSpeed = enemySettings.WalkSpeed;
         attackRange = enemySettings.AttackRange;
-        difficulty = enemySettings.Difficulty;
         damage = enemySettings.Damage;
 
         player = GameObject.FindWithTag("Player");
         controller = player.GetComponent<CarController2D>();
 
         Rigidbody = transform.GetComponent<Rigidbody2D>();
-
-        CheckPositionRelativeToCamera();
     }
 
     void FixedUpdate()
@@ -78,54 +76,8 @@ public class EnemyBehaviorScript : MonoBehaviour
     {
         walkCooldown = true;
 
-        Vector2 playerDirection = ((Vector2)player.transform.position - Rigidbody.position).normalized;
-
-        Vector2 oppositeDirection = -playerDirection;
-
-        Vector2 leftDirection = new Vector2(-playerDirection.y, playerDirection.x);
-        Vector2 rightDirection = new Vector2(playerDirection.y, -playerDirection.x);
-
-        Vector2 chosenDirection = oppositeDirection;
-        int randomChoice = Random.Range(0, 3);
-        if (randomChoice == 1) chosenDirection = leftDirection;
-        else if (randomChoice == 2) chosenDirection = rightDirection;
-
-        float elapsedTime = 0f;
-        while (elapsedTime < cooldownTime)
-        {
-            Vector2 newPosition = Rigidbody.position + chosenDirection * walkSpeed * Time.deltaTime;
-            Rigidbody.MovePosition(newPosition);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(cooldownTime);
 
         walkCooldown = false;
-    }
-
-    private void CheckPositionRelativeToCamera()
-    {
-        Camera mainCamera = Camera.main;
-
-        if (!mainCamera || visual == null) return;
-
-        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
-
-        if (Mathf.Abs(viewportPosition.x - 0.5f) < centerThreshold) return;
-
-        if (viewportPosition.x < 0.5f && visual.transform.localScale.x < 0)
-        {
-            MirrorVisual(true);
-        }
-        else if (viewportPosition.x > 0.5f && visual.transform.localScale.x > 0)
-        {
-            MirrorVisual(false);
-        }
-    }
-
-    private void MirrorVisual(bool isLeftSide)
-    {
-        Vector3 scale = visual.transform.localScale;
-        scale.x = isLeftSide ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-        visual.transform.localScale = scale;
     }
 }
