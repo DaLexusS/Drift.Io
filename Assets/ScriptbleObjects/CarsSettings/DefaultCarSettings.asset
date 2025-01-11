@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81eb98a1ce29694fa33241b3fdde614, type: 3}
   m_Name: DefaultCarSettings
   m_EditorClassIdentifier: 
-  acceleration: 4.5
-  turnSpeed: 2
+  acceleration: 4
+  turnSpeed: 1.5
   rotationDelay: 0.4
   dragAmount: 8
