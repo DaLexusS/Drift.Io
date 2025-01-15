@@ -5,9 +5,22 @@ using UnityEngine;
 public class WeldCameraToCar : MonoBehaviour
 {
     [SerializeField] GameObject car;
-    
+    private float yOffset = 0.55f;
+    private Rigidbody2D canvasRigidBoy;
+
+    private void Awake()
+    {
+        canvasRigidBoy = GetComponent<Rigidbody2D>();
+    }
     private void FixedUpdate()
     {
-        gameObject.transform.position = car.transform.position;
+        if (car != null)
+        {
+            Vector2 targetPosition = car.transform.position;
+
+            targetPosition.y += yOffset;
+
+            canvasRigidBoy.MovePosition(targetPosition);
+        }
     }
 }
