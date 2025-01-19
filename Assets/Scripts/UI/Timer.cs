@@ -9,9 +9,11 @@ public class Timer : MonoBehaviour
     private float elapsedTime = 0f;
     public string formattedTime = "00:00";
     [SerializeField] TMP_Text TimerText;
+    [SerializeField] PauseButton PauseButton;
 
     void Update()
     {
+        //if (PauseButton.IsPaused) { return; }
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime >= 1f)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class EnemiesManager : MonoBehaviour
     public float spawnDelay = 3f;
     public float MaxRoundTime = 180f;
     private int currentTime;
+    private bool gamePaused = false;
 
     List<Transform> closestToPlayerSpawners = new List<Transform>();
 
@@ -37,7 +39,7 @@ public class EnemiesManager : MonoBehaviour
         {
             lastTimeSpawned = Time.time + spawnDelay;
 
-            if (transform.childCount >= MaxEnemyCount) { return; }
+            if (transform.childCount >= MaxEnemyCount || gamePaused) { return; }
 
             SpawnEnemy();
         }
