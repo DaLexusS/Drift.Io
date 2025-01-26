@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
 
         else
         {
-            Health enemyHealth = collision.GetComponent<Health>();
+            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
 
             if (enemyHealth == null) { return; }
 

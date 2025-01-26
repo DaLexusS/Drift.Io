@@ -36,7 +36,7 @@ public class EnemyBehaviorScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (walkCooldown || !player) { return; }
+        if (walkCooldown || !player ) { return; }
 
         float distanceToPlayer = Vector2.Distance(player.transform.position, Rigidbody.position);
 

@@ -3,15 +3,18 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
     public EnemySettings enemySettings;
     public int health;
     public float damageResistance;
-    public bool damagedCooldown = false;
+    [SerializeField] public bool damagedCooldown = false;
     public float cooldownTime = 0.5f;
-    GameObject player;
-    
+    public GameObject enemyVisual;
+    public GameObject player;
+    public GameObject pyhsicalHitbox;
+    private bool canDamage = true;
+    private float timeBeforeDestroy = 0.7f;
 
     private void Start()
     {
@@ -22,7 +25,7 @@ public class Health : MonoBehaviour
 
     public void Damage(int amount)
     {
-        if (damagedCooldown) 
+        if (damagedCooldown || !canDamage) 
         {
             return;
         }
@@ -35,21 +38,44 @@ public class Health : MonoBehaviour
         CheckAlive();
     }
 
+    public void DamageWhenFar()
+    {
+        Destroy(gameObject);
+    }
+
     private void CheckAlive()
     {
         if (health <= 0) 
         {
+            canDamage = true;
             player.GetComponent<Player>().AddXp(enemySettings.xpForKill);
-            Object.Destroy(gameObject);
-
+            enemyVisual.GetComponent<Animator>().SetTrigger("OnDeath");
             player.GetComponent<Player>().enemiesKilled++;
+            StartCoroutine(AnimateDeath());
         }
     }
 
+    private void ChangeVisualLayoutOrder()
+    {
+        foreach (Transform child in enemyVisual.transform)
+        {
+            child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -2;
+        }
+    }
     public IEnumerator StartDamageCooldown()
     {
         damagedCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         damagedCooldown = false;
+    }
+
+    private IEnumerator AnimateDeath()
+    {
+        damagedCooldown = true;
+        transform.gameObject.GetComponent<Rigidbody2D>().simulated = false;
+        ChangeVisualLayoutOrder();
+        Destroy(pyhsicalHitbox);
+        yield return new WaitForSeconds(timeBeforeDestroy);
+        Destroy(gameObject);
     }
 }
