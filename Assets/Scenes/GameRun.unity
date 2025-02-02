@@ -3625,6 +3625,7 @@ GameObject:
   - component: {fileID: 316281842}
   - component: {fileID: 316281843}
   - component: {fileID: 316281844}
+  - component: {fileID: 316281845}
   m_Layer: 7
   m_Name: Car
   m_TagString: Player
@@ -3762,6 +3763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e0bc6277123ca4d85d789118d46502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 316281845}
   maxHealth: 100
   health: 100
   maxSpeed: 7
@@ -3850,6 +3852,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.37, y: 2.64}
   m_Direction: 0
+--- !u!95 &316281845
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316281833}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a8bfc681fbacf84d8fbeaea8433c603, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &317627803
 GameObject:
   m_ObjectHideFlags: 0
