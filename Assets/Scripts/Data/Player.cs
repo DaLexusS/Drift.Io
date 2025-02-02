@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] Animator animator;
     public int maxHealth;
     public int health;
     public float maxSpeed;
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
             health = math.max(0, health - damage);
 
             OnHealthChanged.Invoke(health);
+
+            animator.SetTrigger("OnDamage");
 
             if (health == 0)
             {

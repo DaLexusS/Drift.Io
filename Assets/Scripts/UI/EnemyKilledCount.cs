@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class EnemyKilledCount : MonoBehaviour
 {
+    [SerializeField] TMP_Text countText;
     private Player player;
     private int currentCount = 0;
-    [SerializeField] TMP_Text countText;
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();

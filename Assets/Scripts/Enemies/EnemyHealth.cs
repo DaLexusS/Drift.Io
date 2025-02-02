@@ -9,12 +9,13 @@ public class EnemyHealth : MonoBehaviour
     public int health;
     public float damageResistance;
     [SerializeField] public bool damagedCooldown = false;
+    public ParticleSystem bloodSplat;
     public float cooldownTime = 0.5f;
     public GameObject enemyVisual;
     public GameObject player;
     public GameObject pyhsicalHitbox;
     private bool canDamage = true;
-    private float timeBeforeDestroy = 0.7f;
+    private float timeBeforeDestroy = 1.3f;
 
     private void Start()
     {
@@ -71,6 +72,7 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator AnimateDeath()
     {
+        bloodSplat.Play();
         damagedCooldown = true;
         transform.gameObject.GetComponent<Rigidbody2D>().simulated = false;
         ChangeVisualLayoutOrder();
